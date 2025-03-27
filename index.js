@@ -15,6 +15,17 @@ app.post('/',async(req,res)=>{
     await User.create({login,password})
 })
 
+app.delete('/:id',async(req,res)=>{
+    const {id} = req.params
+    const candidate = await User.findByPk(id)
+    if(!candidate){
+        return res.status(500).json({message:`Server error`})
+    }
+    await candidate.destroy()
+    res.send(`user was destroyed`)
+})
+
+
 app.get('/',(req,res)=>{
     res.send(`hello world`)
 })
